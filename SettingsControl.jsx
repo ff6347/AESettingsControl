@@ -130,7 +130,7 @@ function SettingsControl (_section) {
 },
 
 "set_setting_number"  : function ( key, value) {
-  this.set_setting( key, (String(value)).toLowerCase());
+  this.set_setting( key, (String(value)));
 },
 
 "set_setting_string"  : function ( key, value) {
@@ -139,7 +139,117 @@ function SettingsControl (_section) {
  set_setting_boolean  : function ( key, value) {
    var val = value ? 'true' : 'false';
    this.set_setting( key , (value ? 'true' : 'false'));
+ },
+"isInt": function(n) {
+   return n % 1 === 0;
+},
+"detectType":function(value){
+  var res = null;
+  switch (typeof value) {
+    case 'string':
+      res = 0;
+      break;
+    case 'number':
+      if(this.isInt(value)){
+
+      res = 1;
+      }else{
+        res = 2;
+      }
+      break;
+    case 'boolean':
+      res = 3;
+      break;
+    default:
+      res = 4;
+      break;
+  }
+  return res;
+  },
+ "patch_settings_recieve": function(obj, keys){
+  /**
+   * This function gets an object flat object like this
+   * settings = {
+   * "radius":100,
+   * "doit": true,
+   * "name": "Bob"
+   * };
+   *
+   * and compares the key names to a list of keys that should be in the section
+   *
+   */
+      for(var i = 0; i < keys.length;i++){
+  for(var key in obj){
+    if(obj.hasOwnProperty(key)){
+        if(key == keys[i]){
+          // do something.
+          // not done yet. It needs to identify what type of object it is
+          // eg . switch
+          var val = null;
+          var type = this.detectType(obj[key]);
+          if (type === 0) {
+
+            val = this.get_setting_string(keys[i]);
+            if(val !== null){
+              obj[key] = val;
+            }
+
+            }else if(type === 1){
+            val = this.get_setting_int(keys[i]);
+            if(val !== null){
+              obj[key] = val;
+            }
+            }else if (type === 2) {
+            val = this.get_setting_float(keys[i]);
+            if(val !== null){
+              obj[key] = val;
+            }
+            }else if (type ===3) {
+            val = this.get_setting_boolean(keys[i]);
+            if(val !== null){
+              obj[key] = val;
+            }
+            } else if(type === 4){
+              // return;
+              //
+            }
+
+          // switch(typeof obj[key]){
+          //   case 'string':
+          //   continue;
+          //   case 'number':
+          //   if(this.isInt(obj[key])){
+          //     // this is integer
+          //     val = this.get_setting_int(keys[i]);
+          //     if(val !== null){
+          //       obj[key] = val;
+          //       }
+          //     }else{
+          //       // this is floating point
+          //     val = this.get_setting_float(keys[i]);
+          //     if(val !== null){
+          //        obj[key] = val;
+          //       }
+          //     }
+          //   continue;
+          //   case 'boolean':
+          //   val = this.get_setting_boolean(keys[i]);
+          //   if(val !== null){
+          //     obj[key] = val;
+          //   }
+          //   continue;
+          //   // default:
+          //   // alert("Default");
+          //   // continue;
+          // }
+        }
+      }
+    }
+  }
+
  }
+
+
 };
 
 } // end of settings control
