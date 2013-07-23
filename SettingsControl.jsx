@@ -210,46 +210,11 @@ function SettingsControl (_section) {
               obj[key] = val;
             }
             } else if(type === 4){
-              // return;
-              //
             }
-
-          // switch(typeof obj[key]){
-          //   case 'string':
-          //   continue;
-          //   case 'number':
-          //   if(this.isInt(obj[key])){
-          //     // this is integer
-          //     val = this.get_setting_int(keys[i]);
-          //     if(val !== null){
-          //       obj[key] = val;
-          //       }
-          //     }else{
-          //       // this is floating point
-          //     val = this.get_setting_float(keys[i]);
-          //     if(val !== null){
-          //        obj[key] = val;
-          //       }
-          //     }
-          //   continue;
-          //   case 'boolean':
-          //   val = this.get_setting_boolean(keys[i]);
-          //   if(val !== null){
-          //     obj[key] = val;
-          //   }
-          //   continue;
-          //   // default:
-          //   // alert("Default");
-          //   // continue;
-          // }
         }
       }
     }
   }
-
  }
-
-
 };
-
 } // end of settings control
